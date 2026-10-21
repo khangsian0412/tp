@@ -65,6 +65,9 @@ public class DeletePetCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        assert (targetIndex != null && petName == null && ownerPhone == null)
+                || (targetIndex == null && petName != null && ownerPhone != null)
+                : "A delete-pet command must use exactly one supported identification mode.";
 
         Pet petToDelete = findPet(model);
 

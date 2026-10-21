@@ -123,6 +123,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting BuBu " + MainApp.VERSION);
+        // Temporary tutorial demonstration. Remove after capturing the assertion-failure screenshot.
+        assert false : "Intentional assertion failure for the tutorial demonstration.";
         ui.start(primaryStage);
     }
 

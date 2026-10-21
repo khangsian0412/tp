@@ -9,6 +9,8 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalClients.ALICE;
 import static seedu.address.testutil.TypicalClients.BOB;
 
+import java.lang.reflect.Field;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -128,6 +130,16 @@ public class DeletePetCommandTest {
         assertThrows(NullPointerException.class, () -> new DeletePetCommand((Index) null));
         assertThrows(NullPointerException.class, () -> new DeletePetCommand(null, ALICE.getPhone()));
         assertThrows(NullPointerException.class, () -> new DeletePetCommand(milo.getName(), null));
+    }
+
+    @Test
+    public void execute_corruptedDeletionMode_throwsAssertionError() throws ReflectiveOperationException {
+        DeletePetCommand deletePetCommand = new DeletePetCommand(Index.fromOneBased(1));
+        Field targetIndex = DeletePetCommand.class.getDeclaredField("targetIndex");
+        targetIndex.setAccessible(true);
+        targetIndex.set(deletePetCommand, null);
+
+        assertThrows(AssertionError.class, () -> deletePetCommand.execute(model));
     }
 
     @Test
